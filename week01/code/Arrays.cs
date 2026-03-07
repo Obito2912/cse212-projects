@@ -12,8 +12,17 @@ public static class Arrays
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
+        // 1. Create an array of doubles with the specified length.
+        // 2. Use a loop to fill the array with multiples of the given number.
+        // 3. Return the array.
+        var multiplesArr = new double[length];
 
-        return []; // replace this return statement with your own
+        for (int i = 0; i < length; i++)
+        {
+            multiplesArr[i] = number * (i + 1);
+        }
+
+        return multiplesArr; // replace this return statement with your own
     }
 
     /// <summary>
@@ -29,5 +38,16 @@ public static class Arrays
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
+        // 1. Use a method to take the last 'amount' elements of the list and store them in a temporary list.
+        // 2. Remove the last 'amount' elements from the original list.
+        // 3. Insert the temporary list at the beginning of the original list.
+        var tempList = new List<int>();
+        var addToList = data.GetRange(data.Count - amount, amount);
+        tempList.AddRange(addToList);
+        data.RemoveRange(data.Count - amount, amount);
+        for (int i = tempList.Count - 1; i >= 0; i--)
+        {
+            data.Insert(0, tempList[i]);
+        }
     }
 }
