@@ -10,7 +10,9 @@ public class PriorityQueueTests
     // The value, being the string, and the priority, being the integer.
     // Add the following values: "Carlos" (2), "Jose" (3), "Jonathan" (4), "Jorge" (4), "Maria" (1), "Juan" (6) and run until the queue is empty.
     // Expected Result: The values should be dequeued in the order of their priority, with higher priority values dequeued first.
-    // Defect(s) Found: 
+    // Defect(s) Found: The loop in the Dequeue method was not correctly finding the item with the highest priority, which caused items to be dequeued in the wrong order.
+    // Defect(S) Found: Dequeue method did not have _queue.RemoveAt(highPriorityIndex) to remove the item with the highest priority from the queue.
+    // Defect(s) Found: One fo the conditions was using >= instead of > which resulted that when two items had the same priority, the later one was taken instead of maintaining FIFO.
     public void TestPriorityQueue_1()
     {
         var carlos = new PriorityItem("carlos", 2);
@@ -40,7 +42,7 @@ public class PriorityQueueTests
     // Scenario: If the queue is empty, then an error exception shall be thrown.
     // This exception should be an InvalidOperationException with a message of "The queue is empty."
     // Expected Result: An InvalidOperationException is thrown with the message "The queue is empty."
-    // Defect(s) Found: 
+    // Defect(s) Found: The Dequeue method did not check if the queue was empty before trying to find the item with the highest priority.
     public void TestPriorityQueue_2()
     {
 
