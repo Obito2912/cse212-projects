@@ -33,6 +33,18 @@ public class LinkedList : IEnumerable<int>
     public void InsertTail(int value)
     {
         // TODO Problem 1
+        Node newNode = new(value);
+        if (_tail is null)
+        {
+            _head = newNode;
+            _tail = newNode;
+        }
+        else
+        {
+            newNode.Prev = _tail;
+            _tail.Next = newNode;
+            _tail = newNode;
+        }
     }
 
 
@@ -65,6 +77,18 @@ public class LinkedList : IEnumerable<int>
     public void RemoveTail()
     {
         // TODO Problem 2
+        if (_tail == _head)
+        {
+            _head = null;
+            _tail = null;
+        }
+        // If the list has more than one item in it, then only the head
+        // will be affected.
+        else if (_tail is not null)
+        {
+            _tail.Prev!.Next = null; // Disconnect the second node from the first node
+            _tail = _tail.Prev; // Update the head to point to the second node
+        }
     }
 
     /// <summary>
@@ -109,6 +133,31 @@ public class LinkedList : IEnumerable<int>
     public void Remove(int value)
     {
         // TODO Problem 3
+        Node? curr = _head;
+        while (curr is not null)
+        {
+            if (curr.Data == value)
+            {
+                if (curr.Next is not null)
+                {
+                    curr.Next.Prev = curr.Prev;
+                }
+                if (curr.Prev is not null)
+                {
+                    curr.Prev.Next = curr.Next;
+                }
+                if (curr == _head)
+                {
+                    _head = curr.Next;
+                }
+                if (curr == _tail)
+                {
+                    _tail = curr.Prev;
+                }
+                return;
+            }
+            curr = curr.Next;
+        }
     }
 
     /// <summary>
@@ -147,7 +196,12 @@ public class LinkedList : IEnumerable<int>
     public IEnumerable Reverse()
     {
         // TODO Problem 5
-        yield return 0; // replace this line with the correct yield return statement(s)
+        var curr = _tail; // Start at the beginning since this is a forward iteration.
+        while (curr is not null)
+        {
+            yield return curr.Data; // Provide (yield) each item to the user
+            curr = curr.Prev; // Go forward in the linked list
+        }
     }
 
     public override string ToString()
@@ -168,8 +222,10 @@ public class LinkedList : IEnumerable<int>
     }
 }
 
-public static class IntArrayExtensionMethods {
-    public static string AsString(this IEnumerable array) {
+public static class IntArrayExtensionMethods
+{
+    public static string AsString(this IEnumerable array)
+    {
         return "<IEnumerable>{" + string.Join(", ", array.Cast<int>()) + "}";
     }
 }
