@@ -154,6 +154,19 @@ public static class Recursion
             return;
         }
 
+        for (var i = 0; i < pattern.Length; i++)
+        {
+            if (pattern[i] == '*')
+            {
+                var characters = pattern.ToCharArray();
+                characters[i] = '1';
+                WildcardBinary(new string(characters), results);
+                characters[i] = '0';
+                WildcardBinary(new string(characters), results);
+                return;
+            }
+
+        }
     }
 
     /// <summary>
